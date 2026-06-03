@@ -6,9 +6,9 @@ Spring Boot 4.0.6 + Spring AI 2.0.0-M8 + MyBatis-Plus + JPA 架构的企业级 A
 
 | 组件 | 版本 |
 |------|------|
-| Spring Boot | 4.0.6 |
+| Spring Boot | 3.5.14 |
 | Java | 21 |
-| Spring AI | 2.0.0-M8 (OpenAI) |
+| Spring AI | 1.1.7 (OpenAI) |
 | MyBatis-Plus | 3.5.16 |
 | JPA / Hibernate | Boot 4.x 管理 |
 | 数据库 | H2 (dev) / PostgreSQL (prod) |

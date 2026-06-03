@@ -33,13 +33,11 @@ spring:
   # ===================== Spring AI ===================================
   ai:
     openai:
-      enabled: true
       api-key: ${AI_OPENAI_API_KEY:}
       chat:
-        options:
-          model: gpt-4o
-          temperature: 0.7
-          max-tokens: 2048
+        model: gpt-4o
+        temperature: 0.7
+        max-tokens: 2048
 
 # ===================== MyBatis-Plus =================================
 mybatis-plus:
