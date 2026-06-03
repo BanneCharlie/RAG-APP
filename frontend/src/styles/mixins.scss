@@ -1,0 +1,96 @@
+/**
+ * SCSS Mixins（对应后端的工具类/通用方法）
+ *
+ * 注意：此文件使用 @use 引入 variables，确保 mixin 体内的变量
+ * 在定义时即可解析。由于 @use 去重机制，不会与 additionalData
+ * 中的 @use 冲突。
+ */
+@use './variables' as var;
+
+// ===== Flexbox =====
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// ===== 文字溢出省略 =====
+@mixin text-ellipsis($lines: 1) {
+  @if $lines <= 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ===== 滚动条 =====
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+// ===== 卡片容器 =====
+@mixin card {
+  background: var.$bg-white;
+  border-radius: var.$radius-md;
+  box-shadow: var.$shadow-sm;
+}
+
+// ===== 响应式断点 =====
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: 640px) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: 768px) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: 1024px) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: 1280px) { @content; }
+  }
+}
+
+// ===== 定位填充 =====
+@mixin fill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+// ===== 过渡动画 =====
+@mixin transition($property: all, $duration: 0.3s) {
+  transition: $property $duration ease;
+}

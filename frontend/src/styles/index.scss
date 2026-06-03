@@ -1,0 +1,140 @@
+/**
+ * 全局样式入口
+ * 对应后端全局配置类（WebMvcConfigurer、SecurityConfig 等）
+ *
+ * 注意：variables、mixins 和 sass:color 通过 vite.config.ts 的
+ * additionalData 自动注入到每个 SCSS 入口文件，此处不再重复 @use。
+ */
+
+// ===== CSS Reset =====
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: $font-size-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-family;
+  color: $text-primary;
+  background-color: $bg-page;
+  line-height: 1.5;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+
+  &:hover {
+    color: color.mix(black, $primary-color, 10%);
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// ===== 全局通用类 =====
+
+/** 页面容器 */
+.page-container {
+  padding: $spacing-lg;
+}
+
+/** 卡片容器 */
+.card-container {
+  background: $bg-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+/** 搜索区域 */
+.search-bar {
+  background: $bg-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $spacing-md $spacing-lg;
+  margin-bottom: $spacing-md;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-base;
+  align-items: center;
+}
+
+/** 操作按钮区域 */
+.action-bar {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+/** 表格容器 */
+.table-container {
+  background: $bg-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $spacing-md;
+}
+
+/** 文本颜色 */
+.text-primary { color: $text-primary; }
+.text-regular { color: $text-regular; }
+.text-secondary { color: $text-secondary; }
+.text-success { color: $success-color; }
+.text-warning { color: $warning-color; }
+.text-danger { color: $danger-color; }
+
+/** 边距工具类 */
+.mt-xs { margin-top: $spacing-xs; }
+.mt-sm { margin-top: $spacing-sm; }
+.mt-base { margin-top: $spacing-base; }
+.mt-md { margin-top: $spacing-md; }
+.mt-lg { margin-top: $spacing-lg; }
+.mb-xs { margin-bottom: $spacing-xs; }
+.mb-sm { margin-bottom: $spacing-sm; }
+.mb-base { margin-bottom: $spacing-base; }
+.mb-md { margin-bottom: $spacing-md; }
+.mb-lg { margin-bottom: $spacing-lg; }
+.ml-xs { margin-left: $spacing-xs; }
+.ml-sm { margin-left: $spacing-sm; }
+.ml-base { margin-left: $spacing-base; }
+.mr-xs { margin-right: $spacing-xs; }
+.mr-sm { margin-right: $spacing-sm; }
+.mr-base { margin-right: $spacing-base; }
+
+/** 暗色主题覆盖 */
+[data-theme='dark'] {
+  --bg-color: #1a1a2e;
+  --text-color: #e0e0e0;
+  --border-color: #333;
+}

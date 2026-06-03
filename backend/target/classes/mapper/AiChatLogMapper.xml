@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.project.mapper.AiChatLogMapper">
+
+    <!--
+      Custom result map — only needed when extending beyond
+      MyBatis-Plus auto-mapping (e.g. association, collection,
+      custom type handlers).
+      By default, MyBatis-Plus maps underscored columns to camel-case fields.
+    -->
+    <resultMap id="BaseResultMap" type="com.ai.project.entity.AiChatLog">
+        <id column="id" property="id"/>
+        <result column="session_id" property="sessionId"/>
+        <result column="user_message" property="userMessage"/>
+        <result column="ai_reply" property="aiReply"/>
+        <result column="model" property="model"/>
+        <result column="prompt_tokens" property="promptTokens"/>
+        <result column="completion_tokens" property="completionTokens"/>
+        <result column="total_tokens" property="totalTokens"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="deleted"/>
+    </resultMap>
+
+    <!--
+      Example custom query — find the latest N logs for a session.
+      Demonstrates writing a hand-crafted XML mapper alongside
+      MyBatis-Plus auto-generated methods.
+    -->
+    <select id="selectLatestBySession" resultMap="BaseResultMap">
+        SELECT * FROM ai_chat_log
+        WHERE session_id = #{sessionId}
+          AND is_deleted = 0
+        ORDER BY create_time DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>
