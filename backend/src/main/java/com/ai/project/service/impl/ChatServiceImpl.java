@@ -1,7 +1,7 @@
 package com.ai.project.service.impl;
 
-import com.ai.project.dto.ChatRequest;
-import com.ai.project.dto.ChatResponse;
+import com.ai.project.dto.request.ChatRequest;
+import com.ai.project.dto.response.ChatResponse;
 import com.ai.project.service.ChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +13,9 @@ import reactor.core.publisher.Flux;
 import java.util.function.Consumer;
 
 /**
- * Implementation of {@link ChatService} using Spring AI's {@link ChatClient}.
+ * {@link ChatService} 实现 — 基于 Spring AI 的 {@link ChatClient}
  * <p>
- * Delegates to the configured AI model (OpenAI by default) with retry
- * and observability built in.
+ * 委托给配置的 AI 模型（默认 OpenAI），内置重试和可观测性。
  */
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -33,7 +32,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatResponse chat(ChatRequest request) {
-        log.info("Chat request received, message length={}", request.getMessage().length());
+        log.info("收到聊天请求，消息长度={}", request.getMessage().length());
 
         return retryTemplate.execute(context -> {
             long start = System.currentTimeMillis();
@@ -46,9 +45,9 @@ public class ChatServiceImpl implements ChatService {
             org.springframework.ai.chat.model.ChatResponse aiResponse = response.chatResponse();
 
             long elapsed = System.currentTimeMillis() - start;
-            log.info("AI response received in {} ms", elapsed);
+            log.info("AI 响应接收完毕，耗时 {} ms", elapsed);
 
-            // Build usage info
+            // 构建 Token 使用信息
             ChatResponse.TokenUsage usage = ChatResponse.TokenUsage.builder().build();
             if (aiResponse != null && aiResponse.getMetadata() != null
                     && aiResponse.getMetadata().getUsage() != null) {
@@ -71,7 +70,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void streamChat(ChatRequest request, Consumer<String> callback) {
-        log.info("Streaming chat request, message length={}", request.getMessage().length());
+        log.info("流式聊天请求，消息长度={}", request.getMessage().length());
 
         Flux<String> stream = chatClient.prompt()
                 .user(request.getMessage())
@@ -80,8 +79,8 @@ public class ChatServiceImpl implements ChatService {
 
         stream.subscribe(
                 callback::accept,
-                error -> log.error("Stream error: {}", error.getMessage()),
-                () -> log.info("Stream completed")
+                error -> log.error("流式传输错误: {}", error.getMessage()),
+                () -> log.info("流式传输完成")
         );
     }
 }

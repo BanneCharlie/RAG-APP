@@ -4,14 +4,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Web MVC configuration.
+ * Web MVC 配置
  * <p>
- * Configures CORS, interceptors, and static resource handling.
+ * 配置 CORS、拦截器和静态资源处理。
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    // TODO: Add CORS mapping when frontend URL is known
+    // TODO: 已知前端 URL 后添加 CORS 映射
     // @Override
     // public void addCorsMappings(CorsRegistry registry) {
     //     registry.addMapping("/api/**")

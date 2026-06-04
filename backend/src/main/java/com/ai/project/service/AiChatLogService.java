@@ -7,27 +7,27 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * Service interface for {@link AiChatLog} operations.
+ * {@link AiChatLog} 服务接口
  * <p>
- * Extends MyBatis-Plus {@link IService} which provides:
- * save, saveBatch, updateById, list, page, etc.
+ * 继承 MyBatis-Plus {@link IService}，提供 save、saveBatch、
+ * updateById、list、page 等基础方法。
  */
 public interface AiChatLogService extends IService<AiChatLog> {
 
     /**
-     * Retrieve chat history for a given session, ordered by time ascending.
+     * 获取指定会话的聊天记录，按时间升序排列
      *
-     * @param sessionId the conversation session ID
-     * @return ordered list of chat logs
+     * @param sessionId 会话 ID
+     * @return 聊天记录列表（按时间升序）
      */
     List<AiChatLog> getSessionHistory(String sessionId);
 
     /**
-     * Paginated query of all chat logs.
+     * 分页查询所有聊天记录
      *
-     * @param page current page number (1-based)
-     * @param size page size
-     * @return paginated result
+     * @param page 当前页码（从 1 开始）
+     * @param size 每页大小
+     * @return 分页结果
      */
     IPage<AiChatLog> pageQuery(int page, int size);
 }

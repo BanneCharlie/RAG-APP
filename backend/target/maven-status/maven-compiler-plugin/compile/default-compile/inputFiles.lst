@@ -1,22 +1,23 @@
-E:\AI Project\backend\src\main\java\com\ai\project\AiProjectApplication.java
-E:\AI Project\backend\src\main\java\com\ai\project\aspect\LoggingAspect.java
-E:\AI Project\backend\src\main\java\com\ai\project\common\Result.java
-E:\AI Project\backend\src\main\java\com\ai\project\config\AsyncConfig.java
-E:\AI Project\backend\src\main\java\com\ai\project\config\MyBatisPlusConfig.java
-E:\AI Project\backend\src\main\java\com\ai\project\config\MyBatisPlusMetaHandler.java
-E:\AI Project\backend\src\main\java\com\ai\project\config\SpringAiConfig.java
-E:\AI Project\backend\src\main\java\com\ai\project\config\WebMvcConfig.java
-E:\AI Project\backend\src\main\java\com\ai\project\constant\Constants.java
-E:\AI Project\backend\src\main\java\com\ai\project\controller\ChatController.java
-E:\AI Project\backend\src\main\java\com\ai\project\controller\HealthController.java
-E:\AI Project\backend\src\main\java\com\ai\project\dto\ChatRequest.java
-E:\AI Project\backend\src\main\java\com\ai\project\dto\ChatResponse.java
-E:\AI Project\backend\src\main\java\com\ai\project\entity\AiChatLog.java
-E:\AI Project\backend\src\main\java\com\ai\project\entity\BaseEntity.java
-E:\AI Project\backend\src\main\java\com\ai\project\exception\BusinessException.java
-E:\AI Project\backend\src\main\java\com\ai\project\exception\GlobalExceptionHandler.java
-E:\AI Project\backend\src\main\java\com\ai\project\mapper\AiChatLogMapper.java
-E:\AI Project\backend\src\main\java\com\ai\project\service\AiChatLogService.java
-E:\AI Project\backend\src\main\java\com\ai\project\service\ChatService.java
-E:\AI Project\backend\src\main\java\com\ai\project\service\impl\AiChatLogServiceImpl.java
-E:\AI Project\backend\src\main\java\com\ai\project\service\impl\ChatServiceImpl.java
+D:\AIProject\backend\src\main\java\com\ai\project\AiProjectApplication.java
+D:\AIProject\backend\src\main\java\com\ai\project\aspect\LoggingAspect.java
+D:\AIProject\backend\src\main\java\com\ai\project\common\Result.java
+D:\AIProject\backend\src\main\java\com\ai\project\config\AsyncConfig.java
+D:\AIProject\backend\src\main\java\com\ai\project\config\MyBatisPlusConfig.java
+D:\AIProject\backend\src\main\java\com\ai\project\config\MyBatisPlusMetaHandler.java
+D:\AIProject\backend\src\main\java\com\ai\project\config\RedisCacheConfig.java
+D:\AIProject\backend\src\main\java\com\ai\project\config\SpringAiConfig.java
+D:\AIProject\backend\src\main\java\com\ai\project\config\WebMvcConfig.java
+D:\AIProject\backend\src\main\java\com\ai\project\constant\Constants.java
+D:\AIProject\backend\src\main\java\com\ai\project\controller\ChatController.java
+D:\AIProject\backend\src\main\java\com\ai\project\controller\HealthController.java
+D:\AIProject\backend\src\main\java\com\ai\project\dto\request\ChatRequest.java
+D:\AIProject\backend\src\main\java\com\ai\project\dto\response\ChatResponse.java
+D:\AIProject\backend\src\main\java\com\ai\project\entity\AiChatLog.java
+D:\AIProject\backend\src\main\java\com\ai\project\entity\BaseEntity.java
+D:\AIProject\backend\src\main\java\com\ai\project\exception\BusinessException.java
+D:\AIProject\backend\src\main\java\com\ai\project\exception\GlobalExceptionHandler.java
+D:\AIProject\backend\src\main\java\com\ai\project\mapper\AiChatLogMapper.java
+D:\AIProject\backend\src\main\java\com\ai\project\service\AiChatLogService.java
+D:\AIProject\backend\src\main\java\com\ai\project\service\ChatService.java
+D:\AIProject\backend\src\main\java\com\ai\project\service\impl\AiChatLogServiceImpl.java
+D:\AIProject\backend\src\main\java\com\ai\project\service\impl\ChatServiceImpl.java

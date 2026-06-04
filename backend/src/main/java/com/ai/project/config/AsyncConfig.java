@@ -8,18 +8,18 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 /**
- * Asynchronous task execution configuration.
+ * 异步任务执行配置
  * <p>
- * Provides a dedicated thread pool for {@code @Async} methods
- * such as long-running AI calls or batch processing tasks.
+ * 为 {@code @Async} 方法提供专用线程池，适用于长时间运行的
+ * AI 调用或批量处理任务。
  */
 @Configuration
 @EnableAsync
 public class AsyncConfig {
 
     /**
-     * Application-scoped async executor.
-     * Core pool size = CPU cores, max = 2x CPU cores for burst handling.
+     * 应用级异步执行器
+     * 核心线程数 = CPU 核数，最大线程数 = 2x 核数（应对突发流量）
      */
     @Bean("aiTaskExecutor")
     public Executor aiTaskExecutor() {

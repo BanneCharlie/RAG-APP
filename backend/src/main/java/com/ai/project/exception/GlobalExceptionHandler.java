@@ -15,15 +15,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
 
 /**
- * Global exception handler that translates exceptions into uniform
- * {@link Result} responses.
+ * 全局异常处理器，将异常转为统一的 {@link Result} 响应
  * <p>
- * Processing priority:
+ * 处理优先级：
  * <ol>
- *   <li>MethodArgumentNotValidException — field validation errors</li>
- *   <li>ConstraintViolationException — parameter-level validation</li>
- *   <li>BusinessException — domain business rules</li>
- *   <li>Exception — fallback for unexpected errors</li>
+ *   <li>MethodArgumentNotValidException — 字段校验失败</li>
+ *   <li>ConstraintViolationException — 参数级校验失败</li>
+ *   <li>BusinessException — 业务规则错误</li>
+ *   <li>Exception — 未知异常兜底</li>
  * </ol>
  */
 @RestControllerAdvice
@@ -32,7 +31,7 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * Handles {@code @Valid} annotated request body validation failures.
+     * 处理 {@code @Valid} 标注的请求体校验失败
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -40,12 +39,12 @@ public class GlobalExceptionHandler {
         String message = ex.getBindingResult().getFieldErrors().stream()
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining("; "));
-        log.warn("Validation failed: {}", message);
+        log.warn("校验失败: {}", message);
         return Result.badRequest(message);
     }
 
     /**
-     * Handles {@code @Validated} parameter constraint violations.
+     * 处理 {@code @Validated} 参数约束校验失败
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -53,26 +52,26 @@ public class GlobalExceptionHandler {
         String message = ex.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining("; "));
-        log.warn("Constraint violation: {}", message);
+        log.warn("参数约束违反: {}", message);
         return Result.badRequest(message);
     }
 
     /**
-     * Handles known business exceptions.
+     * 处理已知的业务异常
      */
     @ExceptionHandler(BusinessException.class)
     public Result<Void> handleBusinessException(BusinessException ex) {
-        log.warn("Business exception ({}): {}", ex.getCode(), ex.getMessage());
+        log.warn("业务异常 ({}): {}", ex.getCode(), ex.getMessage());
         return Result.error(ex.getCode(), ex.getMessage());
     }
 
     /**
-     * Fallback for all unhandled exceptions.
+     * 兜底：所有未处理的异常
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Void> handleUnknown(Exception ex) {
-        log.error("Unexpected error", ex);
-        return Result.serverError("Internal server error, please try again later");
+        log.error("未预期的错误", ex);
+        return Result.serverError("服务器内部错误，请稍后重试");
     }
 }

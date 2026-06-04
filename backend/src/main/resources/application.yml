@@ -1,5 +1,5 @@
 # ===================================================================
-# AI Project Backend — Main Configuration
+# AI 项目后端 — 主配置文件
 # Spring Boot 4.0.6 + Spring AI 2.0.0-M8
 # ===================================================================
 server:
@@ -9,28 +9,17 @@ spring:
   application:
     name: ai-project-backend
 
-  # Active profile (dev / test / prod)
+  # 激活的环境（dev / dev-full / prod）
   profiles:
     active: dev
 
-  # ===================== JPA / Database ============================
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        format_sql: true
-        jdbc:
-          batch_size: 20
-
-  # ===================== Jackson ====================================
+  # ===================== Jackson 序列化 ============================
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
     default-property-inclusion: non_null
 
-  # ===================== Spring AI ===================================
+  # ===================== Spring AI 配置 ============================
   ai:
     openai:
       api-key: ${AI_OPENAI_API_KEY:}
@@ -39,7 +28,7 @@ spring:
         temperature: 0.7
         max-tokens: 2048
 
-# ===================== MyBatis-Plus =================================
+# ===================== MyBatis-Plus 配置 ==========================
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.ai.project.entity
@@ -55,7 +44,7 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
-# ===================== Logging =====================================
+# ===================== 日志配置 ===================================
 logging:
   level:
     root: INFO
@@ -66,7 +55,7 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
 
-# ===================== Actuator ====================================
+# ===================== Actuator 监控 ==============================
 management:
   endpoints:
     web:

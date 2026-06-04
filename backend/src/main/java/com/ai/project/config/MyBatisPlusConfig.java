@@ -1,6 +1,5 @@
 package com.ai.project.config;
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -9,34 +8,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * MyBatis-Plus configuration.
+ * MyBatis-Plus 配置
  * <p>
- * Registers the pagination plugin and anti-SQL-injection protection.
- * Mapper scanning base package: {@code com.ai.project.mapper}.
+ * 注册分页插件和防 SQL 注入攻击保护。
+ * Mapper 扫描基础包：{@code com.ai.project.mapper}。
  */
 @Configuration
 @MapperScan("com.ai.project.mapper")
 public class MyBatisPlusConfig {
 
     /**
-     * Core MyBatis-Plus interceptor stack.
+     * MyBatis-Plus 核心拦截器栈
      * <ul>
-     *   <li>{@link PaginationInnerInterceptor} — page query support</li>
-     *   <li>{@link BlockAttackInnerInterceptor} — prevents full table update/delete</li>
+     *   <li>{@link PaginationInnerInterceptor} — 分页查询</li>
+     *   <li>{@link BlockAttackInnerInterceptor} — 防止全表更新/删除</li>
      * </ul>
-     * The {@code DbType} is set per active profile in YAML, defaulting to H2 for dev.
+     * DbType 由数据源自动检测，开发环境为 H2，生产环境为 MySQL。
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
-        // Pagination (actual DbType is auto-detected from datasource)
-        PaginationInnerInterceptor pagination = new PaginationInnerInterceptor(DbType.H2);
+        // 分页（实际 DbType 由数据源自动检测）
+        PaginationInnerInterceptor pagination = new PaginationInnerInterceptor();
         pagination.setMaxLimit(500L);
         pagination.setOverflow(true);
         interceptor.addInnerInterceptor(pagination);
 
-        // Safety guard: prevent "update table set ..." without where clause
+        // 安全防护：防止无 WHERE 条件的全表更新/删除
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
 
         return interceptor;

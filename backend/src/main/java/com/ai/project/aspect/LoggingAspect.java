@@ -11,10 +11,9 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * Logging aspect for service-layer methods.
+ * 服务层方法日志切面
  * <p>
- * Logs method entry, exit, execution time, and exceptions.
- * Sensitive parameters are redacted to prevent data leakage.
+ * 记录方法入参、返回、执行时间和异常信息。敏感参数自动脱敏。
  */
 @Aspect
 @Component
@@ -29,14 +28,14 @@ public class LoggingAspect {
     }
 
     /**
-     * Wraps service & controller methods with execution-time logging.
+     * 环绕通知，记录 service 和 controller 方法的执行耗时
      */
     @Around("serviceLayer() || controllerLayer()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Logger log = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
         String methodName = joinPoint.getSignature().toShortString();
 
-        // Log entry (args are truncated for safety)
+        // 记录入参（参数截断，防止敏感信息泄露）
         if (log.isDebugEnabled()) {
             log.debug("→ {} args={}", methodName, Arrays.toString(joinPoint.getArgs()));
         }

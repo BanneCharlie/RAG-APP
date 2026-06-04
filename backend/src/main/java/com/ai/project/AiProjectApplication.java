@@ -6,10 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * AI Project Backend - Spring Boot Application Entry Point.
+ * AI 项目后端 - Spring Boot 应用入口
  * <p>
- * Built with Spring Boot 4.0.6 + Spring AI 2.0.0-M7, targeting Java 21.
- * Provides RESTful APIs for AI-powered chat, document processing, and more.
+ * 提供 AI 对话、文档处理等 RESTful API。
  *
  * @author AI Project Team
  */

@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * MyBatis-Plus meta-object handler for automatic audit-field population.
+ * MyBatis-Plus 元对象处理器，自动填充审计字段
  * <p>
- * Automatically sets {@code createTime} on insert and {@code updateTime}
- * on insert/update for any entity extending {@code BaseEntity}.
+ * 继承 {@code BaseEntity} 的实体在插入时自动填充 {@code createTime}，
+ * 插入/更新时自动填充 {@code updateTime}。
  */
 @Component
 public class MyBatisPlusMetaHandler implements MetaObjectHandler {

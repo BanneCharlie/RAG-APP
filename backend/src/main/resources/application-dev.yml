@@ -1,9 +1,24 @@
 # ===================================================================
-# Development Profile — H2 in-memory, verbose logging
+# 开发环境 — H2 内存库，零外部依赖启动
+# 启动：mvn spring-boot:run -Dspring-boot.run.profiles=dev
 # ===================================================================
 spring:
+  # 禁用 Redis（无外部依赖时可正常启动）
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
+  ai:
+    openai:
+      # 开发环境使用占位 Key，确保 Bean 能正常创建
+      # 实际调用聊天接口时会报错，启动不受影响
+      api-key: ${AI_OPENAI_API_KEY:dev-placeholder-key}
+      chat:
+        options:
+          temperature: 0.7
+          max-tokens: 2048
+
   datasource:
-    url: jdbc:h2:mem:ai_project_dev
+    url: jdbc:h2:mem:ai_project_dev;DB_CLOSE_DELAY=-1;MODE=MySQL
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -13,16 +28,11 @@ spring:
       enabled: true
       path: /h2-console
 
+  # JPA DDL 自动建表（H2 内存库无需 schema.sql）
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
-
-  # SQL init — creates MyBatis-Plus tables for H2 dev
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:sql/schema.sql
 
 logging:
   level:

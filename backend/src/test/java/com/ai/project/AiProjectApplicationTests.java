@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * Integration test verifying the application context loads successfully.
+ * 集成测试，验证 Spring 应用上下文加载成功
  */
 @SpringBootTest
 @ActiveProfiles("dev")
@@ -13,7 +13,7 @@ class AiProjectApplicationTests {
 
     @Test
     void contextLoads() {
-        // Verifies that the entire Spring context initialises without errors.
-        // If any bean fails to wire, this test will fail.
+        // 验证整个 Spring 上下文初始化无异常
+        // 如果有 Bean 装配失败，该测试会失败
     }
 }

@@ -6,12 +6,11 @@ import lombok.Data;
 import java.time.Instant;
 
 /**
- * Unified API response wrapper.
+ * 统一 API 响应封装
  * <p>
- * All controller endpoints return this structure to ensure consistent
- * serialization for the frontend.
+ * 所有 Controller 都返回此结构，确保前端序列化格式一致。
  *
- * @param <T> the type of the response data payload
+ * @param <T> 响应数据类型
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,47 +32,47 @@ public class Result<T> {
         this.timestamp = Instant.now();
     }
 
-    // ---- Success ----
+    // ---- 成功响应 ----
 
     /**
-     * Success with data and default status code 200.
+     * 成功并返回数据，状态码 200
      */
     public static <T> Result<T> success(T data) {
         return new Result<>(200, "success", data);
     }
 
     /**
-     * Success with no data payload.
+     * 成功但不返回数据
      */
     public static <T> Result<T> success() {
         return new Result<>(200, "success", null);
     }
 
-    // ---- Error ----
+    // ---- 错误响应 ----
 
     /**
-     * Error with a custom code and message.
+     * 自定义错误码和消息
      */
     public static <T> Result<T> error(int code, String message) {
         return new Result<>(code, message, null);
     }
 
     /**
-     * Server internal error (500).
+     * 服务器内部错误（500）
      */
     public static <T> Result<T> serverError(String message) {
         return new Result<>(500, message, null);
     }
 
     /**
-     * Bad request (400).
+     * 请求参数错误（400）
      */
     public static <T> Result<T> badRequest(String message) {
         return new Result<>(400, message, null);
     }
 
     /**
-     * Resource not found (404).
+     * 资源未找到（404）
      */
     public static <T> Result<T> notFound(String message) {
         return new Result<>(404, message, null);

@@ -1,17 +1,18 @@
 # AGENTS.md
 
-Spring Boot 4.0.6 + Spring AI 2.0.0-M8 + MyBatis-Plus + JPA 架构的企业级 AI 后端服务，支持 Chat / Streaming 与可扩展的 RAG 能力。
+Spring Boot 3.5.14 + Spring AI 1.1.7 + MyBatis-Plus + JPA 架构的企业级 AI 后端服务，支持 Chat / Streaming 与可扩展的 RAG 能力。
 
 ## 技术栈
 
 | 组件            | 版本                         |
-| --------------- | ---------------------------- |
-| Spring Boot     | 4.0.6                        |
-| Java            | 21                           |
-| Spring AI       | 2.0.0-M8 (OpenAI)            |
-| MyBatis-Plus    | 3.5.16                       |
+| --------------- |----------------------------|
+| Spring Boot     | 3.5.14                     |
+| Java            | 21                         |
+| Spring AI       | 1.1.7 (OpenAI)             |
+| MyBatis-Plus    | 3.5.16                     |
 | JPA / Hibernate | Boot 4.x 管理                |
-| 数据库          | H2 (dev) / PostgreSQL (prod) |
+| 缓存数据库      | Redis 7.0+                        |
+| 存储数据库      | MySQL 8.0+                        |
 
 ## 快速命令
 
@@ -25,8 +26,11 @@ mvn test
 # 运行单个测试类
 mvn test -Dtest=ChatServiceTest
 
-# 启动应用（dev 环境）
+# 启动应用（dev 环境，H2 + 无 Redis，零依赖）
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+# 启动应用（完整 dev，需要本地 MySQL + Redis）
+mvn spring-boot:run -Dspring-boot.run.profiles=dev-full
 
 # 生产构建
 mvn clean package -DskipTests -Pprod
@@ -41,7 +45,9 @@ src/main/java/com/ai/project/
 ├── config/          # SpringAi, Async, MyBatis-Plus, WebMvc 配置
 ├── constant/        # Constants 集中管理常量
 ├── controller/      # REST API — 仅参数校验 + 调用 Service
-├── dto/             # ChatRequest / ChatResponse 输入输出 DTO
+├── dto/
+│   ├── request/       # 请求 DTO（ChatRequest）
+│   └── response/      # 响应 DTO（ChatResponse, TokenUsage）
 ├── entity/          # BaseEntity + 数据表映射实体 (JPA + MP)
 ├── exception/       # BusinessException + GlobalExceptionHandler
 ├── mapper/          # MyBatis-Plus Mapper 接口
@@ -111,7 +117,11 @@ spring:
     openai:
       api-key: ${AI_OPENAI_API_KEY}
   datasource:
-    url: jdbc:h2:mem:ai_project
+    url: jdbc:mysql://localhost:3306/ai_project_dev
+  data:
+    redis:
+      host: localhost
+      port: 6379
 ```
 
 - 多环境：`dev` / `test` / `prod`，通过 `spring.profiles.active` 激活。
@@ -138,6 +148,6 @@ spring:
 ## 重要提醒
 
 1. **AI 调用**：设置每日/每用户 token 上限，防止滥用。
-2. **数据库**：生产环境使用 PostgreSQL，JPA `ddl-auto` 设为 `validate`（禁止自动建表）。
+2. **数据库**：存储使用 MySQL 8.0+（引擎 InnoDB，字符集 utf8mb4），JPA `ddl-auto` 设为 `validate`（禁止自动建表）。缓存使用 Redis 7.0+，Redis Key 遵循 `{project}:{module}:{key}` 命名规范。
 3. **异步任务**：耗时操作（AI 流式、文件处理）使用 `@Async("aiTaskExecutor")`。
 4. **CORS**：开发阶段在 `WebMvcConfig` 中配置前端地址，禁止生产环境开放所有来源。

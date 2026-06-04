@@ -5,11 +5,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * MyBatis-Plus Mapper for {@link AiChatLog}.
+ * MyBatis-Plus Mapper — {@link AiChatLog} 数据访问层
  * <p>
- * Inherits built-in CRUD methods from {@link BaseMapper}:
- * {@code insert}, {@code deleteById}, {@code updateById},
- * {@code selectById}, {@code selectPage}, etc.
+ * 继承 {@link BaseMapper} 提供的内置 CRUD 方法：
+ * insert、deleteById、updateById、selectById、selectPage 等
  */
 @Mapper
 public interface AiChatLogMapper extends BaseMapper<AiChatLog> {

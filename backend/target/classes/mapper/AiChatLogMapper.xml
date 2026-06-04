@@ -4,10 +4,9 @@
 <mapper namespace="com.ai.project.mapper.AiChatLogMapper">
 
     <!--
-      Custom result map — only needed when extending beyond
-      MyBatis-Plus auto-mapping (e.g. association, collection,
-      custom type handlers).
-      By default, MyBatis-Plus maps underscored columns to camel-case fields.
+      自定义结果映射 — 仅在需要扩展 MyBatis-Plus 自动映射时使用
+      （如关联查询、集合映射、自定义类型处理器）。
+      默认情况下 MyBatis-Plus 会将下划线列名自动映射为驼峰字段。
     -->
     <resultMap id="BaseResultMap" type="com.ai.project.entity.AiChatLog">
         <id column="id" property="id"/>
@@ -24,9 +23,8 @@
     </resultMap>
 
     <!--
-      Example custom query — find the latest N logs for a session.
-      Demonstrates writing a hand-crafted XML mapper alongside
-      MyBatis-Plus auto-generated methods.
+      自定义查询示例 — 获取某会话最新的 N 条记录
+      演示如何与 MyBatis-Plus 自动方法配合使用手写 XML
     -->
     <select id="selectLatestBySession" resultMap="BaseResultMap">
         SELECT * FROM ai_chat_log

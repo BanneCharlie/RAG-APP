@@ -1,4 +1,4 @@
-package com.ai.project.dto;
+package com.ai.project.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Chat response DTO returned to the client.
+ * 聊天响应 DTO，返回给客户端
  */
 @Data
 @Builder
@@ -15,17 +15,17 @@ import lombok.NoArgsConstructor;
 public class ChatResponse {
 
     /**
-     * The AI-generated reply text.
+     * AI 生成的回复文本
      */
     private String reply;
 
     /**
-     * Model used for generating the response.
+     * 生成回复所使用的模型名称
      */
     private String model;
 
     /**
-     * Approximate token usage for cost tracking.
+     * 近似 Token 消耗量，用于成本追踪
      */
     private TokenUsage usage;
 

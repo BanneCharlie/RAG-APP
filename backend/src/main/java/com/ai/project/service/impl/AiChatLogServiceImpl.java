@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Implementation of {@link AiChatLogService} using MyBatis-Plus.
+ * {@link AiChatLogService} 实现类 — 基于 MyBatis-Plus
  * <p>
- * Inherits bulk CRUD from {@link ServiceImpl} and adds
- * custom query methods.
+ * 继承 {@link ServiceImpl} 的批量 CRUD 能力，并添加自定义查询方法。
  */
 @Service
 public class AiChatLogServiceImpl

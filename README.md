@@ -6,7 +6,7 @@
 [![Vue](https://img.shields.io/badge/Vue-3.5%2B-4FC08D.svg)](https://vuejs.org/)
 [![Stage](https://img.shields.io/badge/Status-Developing-orange.svg)]()
 
-> **RAG AI Project** — 基于 Spring Boot 4 + Spring AI 2 + Vue 3 + Vite 8 的前后端分离企业级 AI 应用框架，提供智能对话、认证鉴权与后台管理能力。
+> **RAG AI Project** — 基于 Spring Boot 3.5.14 + Spring AI 1.1.7 + Vue 3 + Vite 8 的前后端分离企业级 AI 应用框架，提供智能对话、认证鉴权与后台管理能力。
 
 ---
 
@@ -17,7 +17,8 @@
 | **后端** | Spring Boot / Spring AI | 3.5.14 / 1.1.7 |
 | **后端** | Java | 21 |
 | **后端** | MyBatis-Plus / JPA | 3.5.16 / Boot 4.x |
-| **后端** | 数据库 | H2 (dev) / PostgreSQL (prod) |
+| **后端** | 存储数据库 | MySQL 8.0+ |
+| **后端** | 缓存数据库 | Redis 7.0+ |
 | **前端** | Vue / Vite / TypeScript | 3.5+ / 8.0+ / 6.0+ |
 | **前端** | Pinia / Vue Router | 3.0+ / 4.6+ |
 | **前端** | Axios / SCSS | 1.16+ / 1.100+ |
@@ -68,8 +69,11 @@ cd backend
 # 编译打包
 mvn clean package -DskipTests
 
-# 启动（dev 环境，默认 H2 内存库）
+# 启动（dev 环境，H2 + 无 Redis，零外部依赖）
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+# 启动（完整 dev，需要本地 MySQL + Redis）
+mvn spring-boot:run -Dspring-boot.run.profiles=dev-full
 ```
 
 后端启动后默认监听 `http://localhost:8080`，API 路径 `/api/v1/*`。
