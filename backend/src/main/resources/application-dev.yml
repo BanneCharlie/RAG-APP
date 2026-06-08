@@ -1,16 +1,15 @@
 # ===================================================================
-# 开发环境 — H2 内存库，零外部依赖启动
-# 启动：mvn spring-boot:run -Dspring-boot.run.profiles=dev
+# 开发环境 — MySQL（存储）+ Redis（缓存）
+# 需要本地安装 MySQL 8.0+ 和 Redis 7.0+
+# 启动：mvn spring-boot:run
+#
+# 变量优先级（高 → 低）：
+#   1. OS 环境变量 / IDEA EnvFile 插件加载的 .env
+#   2. YAML 中 :xxx 指定的默认值（如下）
 # ===================================================================
 spring:
-  # 禁用 Redis（无外部依赖时可正常启动）
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-
   ai:
     openai:
-      # 开发环境使用占位 Key，确保 Bean 能正常创建
-      # 实际调用聊天接口时会报错，启动不受影响
       api-key: ${AI_OPENAI_API_KEY:dev-placeholder-key}
       chat:
         options:
@@ -18,20 +17,37 @@ spring:
           max-tokens: 2048
 
   datasource:
-    url: jdbc:h2:mem:ai_project_dev;DB_CLOSE_DELAY=-1;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:rag_app}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+          max-wait: 2000ms
 
-  # JPA DDL 自动建表（H2 内存库无需 schema.sql）
+  # MySQL 使用 schema.sql 建表
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+
+  # 关闭 JPA DDL（由 schema.sql 管理）
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
 
 logging:

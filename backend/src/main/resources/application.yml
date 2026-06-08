@@ -22,9 +22,9 @@ spring:
   # ===================== Spring AI 配置 ============================
   ai:
     openai:
-      api-key: ${AI_OPENAI_API_KEY:}
+      api-key: ${AI_OPENAI_API_KEY}
       chat:
-        model: gpt-4o
+        model: deepseek-v4-flash
         temperature: 0.7
         max-tokens: 2048
 

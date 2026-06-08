@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "code-review": {
+      "source": "openai/codex",
+      "sourceType": "github",
+      "skillPath": ".codex/skills/code-review/SKILL.md",
+      "computedHash": "8f634746633d66f2929b6ac190bf124ab2f51bafb2b421e49d25e10dc8f7a3bb"
+    }
+  }
+}

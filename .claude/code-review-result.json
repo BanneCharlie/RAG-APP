@@ -1,0 +1,62 @@
+[
+  {
+    "file": "backend/src/main/resources/application.yml",
+    "line": 25,
+    "summary": "硬编码了类真实 API Key 作为回落默认值（sk-5fd4d5b131a445a3b8b8425c29926372），提交到 Git 后存在凭据泄露风险",
+    "failure_scenario": "若该 Key 真实有效，任何有仓库访问权限的人可提取并使用它调用 AI API，产生未授权费用。原有空默认值 `${AI_OPENAI_API_KEY:}` 强制开发者设置环境变量，是正确做法。"
+  },
+  {
+    "file": "backend/src/main/resources/application.yml",
+    "line": 27,
+    "summary": "模型名称改为 deepseek-v4-flash，但未配置 spring.ai.openai.base-url，请求仍发往 api.openai.com",
+    "failure_scenario": "OpenAI API 不认识 deepseek-v4-flash，每次聊天请求返回 HTTP 400 Model not found。整个 AI 对话功能完全不可用。若使用 DeepSeek 兼容 API，需设置 base-url=https://api.deepseek.com"
+  },
+  {
+    "file": "backend/src/main/resources/application-dev.yml",
+    "line": 20,
+    "summary": "characterEncoding 从 utf8mb4 改为 UTF-8，Java 的 UTF-8 映射到 MySQL utf8mb3（3字节），无法存储 emoji/4字节字符",
+    "failure_scenario": "用户消息或 AI 回复包含 emoji（如 '你好😊'）时，MySQL 抛出 Incorrect string value 异常，聊天记录写入失败。此问题同时存在于 dev-full.yml:8 和 prod.yml:7"
+  },
+  {
+    "file": "backend/src/main/resources/application-dev.yml",
+    "line": 29,
+    "summary": "删除了 spring.autoconfigure.exclude: RedisAutoConfiguration，但未设置 spring.data.redis.enabled=false，开发环境未安装 Redis 时启动失败",
+    "failure_scenario": "macOS/Linux 开发者本地未安装 Redis，执行 mvn spring-boot:run 时，Spring Boot 的 RedisAutoConfiguration 根据 dev.yml 中的 spring.data.redis.* 配置自动创建连接，连接 localhost:6379 失败导致应用无法启动。RedisCacheConfig 的 @ConditionalOnProperty 仅保护自定义 Bean，不阻止 AutoConfiguration。"
+  },
+  {
+    "file": "backend/src/test/java/com/ai/project/AiProjectApplicationTests.java",
+    "line": 11,
+    "summary": "集成测试使用 @ActiveProfiles(\"dev\")，但 dev 配置现在需要 MySQL 8.0+ 和 Redis 7.0+，无可用的 application-test.yml",
+    "failure_scenario": "CI 流水线（如 GitHub Actions）执行 mvn test 时，无 MySQL/Redis 服务，Spring 上下文初始化失败，contextLoads 测试失败，阻塞整个构建流程。"
+  },
+  {
+    "file": "backend/src/main/resources/application-dev.yml",
+    "line": 20,
+    "summary": "三个环境的默认数据库名称不一致：dev=rag_app、dev-full=ai_project_dev、prod=ai_project",
+    "failure_scenario": "开发者在 dev 和 dev-full 配置间切换时（如调试 Redis 特性），以为操作同一个数据库，实际写入了不同库，数据「凭空消失」。init-database.sql 仅创建 rag_app。"
+  },
+  {
+    "file": "backend/src/main/resources/application-dev.yml",
+    "line": 44,
+    "summary": "sql.init.mode: always 每次启动都执行 schema.sql，CREATE TABLE IF NOT EXISTS 对已存在的表静默跳过，导致 schema 变更不生效",
+    "failure_scenario": "开发者 A 在 schema.sql 中添加 ALTER TABLE 或新列，提交后开发者 B 拉取重启——schema.sql 检测表已存在，静默跳过。新列未创建，JPA 实体映射到旧 schema，运行时查询报错。没有迁移版本管理。"
+  },
+  {
+    "file": "backend/src/main/resources/application-dev.yml",
+    "line": 22,
+    "summary": "数据库默认凭据硬编码为 root/root，且 .env.example 已删除，开发者可能不知需要覆盖",
+    "failure_scenario": "未设置环境变量的开发者不自觉使用了已知的 root/root 默认凭据。dev-full.yml:10-11 也存在相同问题。"
+  },
+  {
+    "file": "backend/.env.example",
+    "line": 1,
+    "summary": ".env.example 被删除，这是记录全部 9 个必需环境变量的唯一文档来源",
+    "failure_scenario": "新开发者克隆仓库后，必须逆向阅读多个 YAML 文件才能梳理出需要设置 DB_HOST/DB_PORT/DB_NAME/DB_USERNAME/DB_PASSWORD/REDIS_HOST/REDIS_PORT/REDIS_PASSWORD/AI_OPENAI_API_KEY 九个环境变量，显著增加上手难度。"
+  },
+  {
+    "file": "README.md",
+    "line": 72,
+    "summary": "README.md 仍描述开发环境为 'H2 + 无 Redis，零外部依赖'，与实际 MySQL + Redis 配置不符",
+    "failure_scenario": "新开发者按 README 执行 mvn spring-boot:run -Dspring-boot.run.profiles=dev，期望零外部依赖启动，实际因缺少 MySQL/Redis 而启动失败。同时 README 第 55-56、116-117 行引用的 SpringBoot.md 和 Vue.md 文件已被删除。"
+  }
+]
